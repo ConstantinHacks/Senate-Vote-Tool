@@ -39,11 +39,11 @@ class App extends React.Component {
         this.props.senators.forEach((senator) => {
             if(senator.party === "D"){
                 dem_rows.push(
-                    <SenatorRow senator={senator}/>
+                    <SenatorRow key={senator.id} senator={senator}/>
                 )
             } else {
                 gop_rows.push(
-                    <SenatorRow senator={senator}/>
+                    <SenatorRow key={senator.id} senator={senator}/>
                 )
             }
         });
@@ -58,6 +58,7 @@ class App extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
+                            {dem_rows}
                         </tbody>
                     </table>
                 </div>
@@ -91,6 +92,7 @@ class App extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
+                                {gop_rows}
                             </tbody>
                         </table>
                 </div>
