@@ -9,6 +9,7 @@ class App extends React.Component {
         axios.get('https://theunitedstates.io/congress-legislators/legislators-current.json')
             .then(res => {                
                 const senators = res.data.filter(legislator => legislator.terms[legislator.terms.length-1].type === "sen");
+                console.log(senators);
                 return senators
             });
     }
