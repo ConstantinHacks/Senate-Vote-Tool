@@ -24,7 +24,7 @@ export default class SenatorCell extends React.Component{
     return (
       <li onClick={this.props.onClick}>
         <Card body inverse color={this.getColor()}>
-          <center><CardText>{this.props.senatorData.name.official_full}</CardText></center>
+          <center><CardText>{this.props.senatorData.name.official_full} ({this.props.senatorData.terms[this.props.senatorData.terms.length-1].state})</CardText></center>
         </Card>
       </li>
     );
