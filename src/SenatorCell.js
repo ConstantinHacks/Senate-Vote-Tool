@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Card, CardTitle, CardText } from 'reactstrap';
+import React from 'react';
+import { Card, CardText } from 'reactstrap';
 import PropTypes from 'prop-types'
 import './SenatorCell.css'
 

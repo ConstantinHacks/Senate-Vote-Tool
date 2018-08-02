@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'
 import SenatorCell from './SenatorCell.js'
 import './SenatorList.css'

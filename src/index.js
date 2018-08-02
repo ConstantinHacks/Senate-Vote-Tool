@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css'
 import SenatorList from './SenatorList.js'
 
 class App extends React.Component {
@@ -30,7 +31,7 @@ class App extends React.Component {
     getSenators(party,didVoteYea) {
       var rv = this.state.senators
 
-      if(party == undefined){
+      if(party === null){
         //noop
       } else if(party === "Republican"){
         rv = rv.filter(legislator => legislator.terms[legislator.terms.length-1].party === "Republican");
@@ -38,13 +39,28 @@ class App extends React.Component {
         rv = rv.filter(legislator => legislator.terms[legislator.terms.length-1].party !== "Republican");
       }
 
-      if(didVoteYea == undefined){
+      if(didVoteYea === null){
         //noop
       }  else {
-        rv = rv.filter(legislator => legislator.voteYea == didVoteYea)
+        rv = rv.filter(legislator => legislator.voteYea === didVoteYea)
       }
       
       return rv
+    }
+
+    toggleAll(party,isVoteYea){
+      var sens = this.state.senators
+      sens.forEach(function(s){
+        //handle special Bernie Case
+        if(s.terms[s.terms.length-1].party === "Independent"){
+          s.terms[s.terms.length-1].party = "Democrat"
+        }
+        if(party === s.terms[s.terms.length-1].party){
+          s.voteYea = isVoteYea
+        }
+      })
+
+      this.setState({senators:sens})
     }
     
     //Switch Individual Senator
@@ -65,25 +81,29 @@ class App extends React.Component {
 
           <div className="row">
               <div className="col-sm">
-                  Democrats voting Nay ({this.getSenators("Democrat",false).length})
+                  <p><button type="button" onClick={() => this.toggleAll("Democrat",false)} className="btn btn-outline-primary">All Dems Nay</button></p>
+                  <p>Democrats voting Nay ({this.getSenators("Democrat",false).length})</p>
                   <SenatorList
                     onClick={(id) => this.handleClick(id)}
                     senators={this.getSenators("Democrat",false)}/>
               </div>
               <div className="col-sm">
-                  Democrats voting Yay ({this.getSenators("Democrat",true).length})
+                  <p><button type="button" onClick={() => this.toggleAll("Democrat",true)} className="btn btn-outline-primary">All Dems Yay</button></p>
+                  <p>Democrats voting Yea ({this.getSenators("Democrat",true).length})</p>
                   <SenatorList
                     onClick={(id) => this.handleClick(id)}
                     senators={this.getSenators("Democrat",true)}/>
               </div>
               <div className="col-sm">
-                  Republicans voting Yay ({this.getSenators("Republican",true).length})
+                  <p><button type="button" onClick={() => this.toggleAll("Republican",true)} className="btn btn-outline-danger">All GOP Yay</button></p>
+                  <p>Republicans voting Yea ({this.getSenators("Republican",true).length})</p>
                   <SenatorList
                     onClick={(id) => this.handleClick(id)}
                     senators={this.getSenators("Republican",true)}/>
               </div>
               <div className="col-sm">
-                  Republicans voting Nay ({this.getSenators("Republican",false).length})
+                  <p><button type="button" onClick={() => this.toggleAll("Republican",false)} className="btn btn-outline-danger">All GOP Nay</button></p>
+                  <p>Republicans voting Nay ({this.getSenators("Republican",false).length})</p>
                   <SenatorList
                     onClick={(id) => this.handleClick(id)}
                     senators={this.getSenators("Republican",false)}/>
